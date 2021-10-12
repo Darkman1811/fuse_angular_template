@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FuseSharedModule } from '@fuse/shared.module';
+import { TestingGuard } from 'app/security/testing.guard';
+import { KeycloakGuardGuard } from 'app/security/keycloak-guard.guard';
+
 
 const routes = [
     {
@@ -10,7 +13,10 @@ const routes = [
     },
     {
         path        : 'dashboards/project',
-        loadChildren: () => import('./dashboards/project/project.module').then(m => m.ProjectDashboardModule)
+        loadChildren: () => import('./dashboards/project/project.module').then(m => m.ProjectDashboardModule),
+       // canActivate:[TestingGuard]
+       canActivate:[KeycloakGuardGuard],
+       data: {roles: ['admin']}
     },
     {
         path        : 'mail',
