@@ -8,6 +8,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { KeycloakService } from 'keycloak-angular';
+import { KeycloakInstance } from 'keycloak-js';
 
 @Component({
     selector     : 'toolbar',
@@ -18,6 +20,19 @@ import { navigation } from 'app/navigation/navigation';
 
 export class ToolbarComponent implements OnInit, OnDestroy
 {
+    public  logedUsername="Guest";
+    public logout(){
+            this.keycloak.logout();
+            
+    }
+
+    public initKeycloakVariables(){
+       this.logedUsername=this.keycloak.getUsername();
+
+    // let  val=JSON.stringify(this.keycloak.getKeycloakInstance().tokenParsed);
+      // console.log(val);
+    }
+
     horizontalNavbar: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
@@ -39,7 +54,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        protected readonly keycloak: KeycloakService
+
     )
     {
         // Set the defaults
@@ -88,6 +105,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        //Init keycloak security variables displayed
+        this.initKeycloakVariables();
     }
 
     // -----------------------------------------------------------------------------------------------------

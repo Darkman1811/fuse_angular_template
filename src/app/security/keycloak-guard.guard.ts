@@ -28,7 +28,7 @@ export class KeycloakGuardGuard extends KeycloakAuthGuard {
     
     // Get the roles required from the route.
     const requiredRoles = route.data.roles;
-
+/*
      //Printing actual user roles 
     for(var i=0;i<this.roles.length;i++){
         localStorage.setItem("actual"+i,this.roles[i]);
@@ -38,7 +38,7 @@ export class KeycloakGuardGuard extends KeycloakAuthGuard {
     for(var i=0;i<requiredRoles.length;i++){
       localStorage.setItem("required"+i,requiredRoles[i]);
   }
-
+*/
     // Allow the user to to proceed if no additional roles are required to access the route.
     if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
       return true;

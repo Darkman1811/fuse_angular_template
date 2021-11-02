@@ -21,7 +21,13 @@ import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import {SecurityModule} from"./security/security.module";
+import {FeaturesModule} from "app/features/features.module"
+import { featureComponent } from './features/feature/feature.component';
 const appRoutes: Routes = [
+    {
+        path:"feature",
+        component: featureComponent
+    },
     {
         path        : 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
@@ -62,6 +68,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
         //  silentCheckSsoRedirectUri:
         //    window.location.origin + '/assets/silent-check-sso.html',
         },
+        enableBearerInterceptor: true,
+        loadUserProfileAtStartUp: true
       });
   }
 
